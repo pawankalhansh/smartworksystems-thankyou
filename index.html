@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>धन्यवाद | Smart Work Systems</title>
+<script>
+// Book list: key -> [name, price paid in INR]. Instamojo "Redirect URL" = https://<site>/?b=<key>
+var BOOKS = {
+  board:   ["Board Exam 90-Day AI Planner", 149],
+  english: ["English Bolna Seekho 1000+ Sentences", 149],
+  dukaan:  ["Dukaandar AI Kit", 199],
+  kids99:  ["Kids Learning Worksheets", 99],
+  kids500: ["500 Kids Worksheets", 299],
+  parent:  ["Smart Parenting 2-18", 149],
+  ayur:    ["Gharelu Ayurveda Sangrah", 149],
+  puja:    ["Dainik Puja Aarti Sangrah", 149],
+  vastu:   ["Bina Tod-Phod Vastu", 149],
+  sanatan: ["Sanatan Dharma Vaidik Gyan", 149],
+  diet:    ["Ghar Ke Khane Se Vazan Ghataye", 149],
+  chart:   ["Chart Pattern Handbook", 149],
+  resume:  ["AI Resume & Interview Kit", 149],
+  prompts: ["300 AI Prompts Hindi", 99]
+};
+var q = new URLSearchParams(location.search);
+var key = q.get("b") || "";
+var book = BOOKS[key];
+var pid = q.get("payment_id") || "";
+var status = (q.get("payment_status") || "").toLowerCase();
+var paid = !!(book && pid && status !== "failed");
+
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2089617978344904');
+fbq('track', 'PageView');
+if (paid) {
+  // eventID = Instamojo payment id, so a page reload is not counted as a second sale
+  fbq('track', 'Purchase', {
+    value: book[1], currency: 'INR',
+    content_name: book[0], content_ids: [key], content_type: 'product'
+  }, { eventID: pid });
+}
+</script>
+<style>
+  :root { --bg:#f6f4ef; --card:#ffffff; --ink:#1f2430; --muted:#5b6170; --accent:#1f4e79; --ok:#1b7f4b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font: 18px/1.6 "Noto Sans Devanagari", "Mangal", system-ui, sans-serif; }
+  main { max-width: 560px; margin: 40px auto; padding: 0 16px; }
+  .card { background:var(--card); border-radius:16px; padding:32px 24px;
+          box-shadow: 0 2px 16px rgba(0,0,0,.06); text-align:center; }
+  .tick { width:64px; height:64px; border-radius:50%; background:var(--ok); color:#fff;
+          font-size:36px; line-height:64px; margin:0 auto 12px; }
+  h1 { font-size:28px; margin:8px 0; }
+  p { margin:10px 0; color:var(--muted); }
+  .book { color:var(--ink); font-weight:600; }
+  .steps { text-align:left; background:#f2f6fa; border-radius:12px; padding:14px 18px; margin:20px 0; }
+  .steps li { margin:6px 0; }
+  a.btn { display:inline-block; margin-top:8px; padding:12px 22px; border-radius:10px;
+          background:var(--accent); color:#fff; text-decoration:none; font-weight:600; }
+  .small { font-size:15px; }
+  footer { text-align:center; font-size:14px; color:var(--muted); margin:18px 0; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <div class="tick">✓</div>
+    <h1>धन्यवाद! 🙏</h1>
+    <p id="msg">आपका order मिल गया है।</p>
+    <ol class="steps">
+      <li>आपकी PDF का download link आपके <b>email</b> पर भेज दिया गया है (Instamojo से)।</li>
+      <li>Inbox में न दिखे तो <b>Spam / Promotions</b> folder देखें।</li>
+      <li>फिर भी न मिले तो हमें email करें — हम link दोबारा भेज देंगे।</li>
+    </ol>
+    <a class="btn" href="https://smartworksystems.myinstamojo.com">और किताबें देखें</a>
+    <p class="small">मदद: <a href="mailto:helpsmartworksystems@gmail.com">helpsmartworksystems@gmail.com</a></p>
+  </div>
+  <footer>© Smart Work Systems</footer>
+</main>
+<script>
+  if (book) document.getElementById("msg").innerHTML =
+    'आपका order <span class="book"></span> मिल गया है।';
+  var s = document.querySelector(".book"); if (s) s.textContent = "“" + book[0] + "”";
+</script>
+</body>
+</html>
